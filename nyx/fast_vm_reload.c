@@ -419,7 +419,6 @@ void fast_reload_create_in_memory(fast_reload_t *self)
 
 void fast_reload_restore(fast_reload_t *self)
 {
-    fprintf(stderr, "[nyx] restore virt=%lld\n", (long long)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
     cpu_disable_ticks();
     
     assert(self != NULL);
@@ -443,10 +442,6 @@ void fast_reload_restore(fast_reload_t *self)
 
     cpu_enable_ticks();
     nyx_hpet_rearm();
-    
-    fprintf(stderr, "[nyx] restored virt=%lld next_timer_in=%lld us\n",
-        (long long)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL),
-        (long long)(qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL, QEMU_TIMER_ATTR_ALL) / 1000));
     
     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
     
